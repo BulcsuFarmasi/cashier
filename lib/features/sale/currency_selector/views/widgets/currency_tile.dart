@@ -1,13 +1,19 @@
+import 'package:exhibition_register/features/sale/currency_selector/controller/currency_selector_page_state_notifier.dart';
 import 'package:exhibition_register/features/sale/data/currency.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CurrencyTile extends StatelessWidget {
+class CurrencyTile extends ConsumerWidget {
   const CurrencyTile({super.key, required this.currency});
 
   final Currency currency;
 
+  void onSelectCurrency(WidgetRef ref) {
+    ref.read(currencySelectorPageStateNotifierProvider.notifier).createSale(currency);
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       width: 300,
       height: 300,
@@ -17,7 +23,9 @@ class CurrencyTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          onSelectCurrency(ref);
+        },
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: Center(

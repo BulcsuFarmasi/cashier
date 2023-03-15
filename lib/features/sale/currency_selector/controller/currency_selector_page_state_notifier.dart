@@ -19,4 +19,8 @@ class CurrencySelectorPageStateNotifier extends StateNotifier<CurrencySelectorPa
 
     state = CurrencySelectorPageState.successful(currencies);
   }
+
+  void createSale(Currency currency) {
+    _currencySelectorRepository.createSale(currency);
+  }
 }
