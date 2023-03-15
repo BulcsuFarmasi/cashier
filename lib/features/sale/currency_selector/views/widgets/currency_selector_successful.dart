@@ -13,7 +13,7 @@ class CurrencySelectorSuccessful extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Válasz ki a vásárlás valutájtát',
+          'Válasz ki a vásárlás valutájtát!',
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         Row(
