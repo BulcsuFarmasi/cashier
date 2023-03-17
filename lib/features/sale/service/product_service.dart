@@ -1,3 +1,4 @@
+import 'package:cash/features/sale/data/currency.dart';
 import 'package:cash/features/sale/data/product.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,24 +10,24 @@ class ProductService {
       'EuntBxNBQb',
       'Poló',
       {
-        'HUF': 11000,
-        'EUR': 28,
+        Currency.huf: 11000,
+        Currency.eur: 28,
       },
     ),
     Product(
       'ihUkvznbWu',
       'Pulóver',
       {
-        'HUF': 20000,
-        'EUR': 50,
+        Currency.huf: 20000,
+        Currency.eur: 50,
       },
     ),
     Product(
       'FtfZoEtpry',
       'Sapka',
       {
-        'HUF': 1800,
-        'EUR': 12,
+        Currency.huf: 1800,
+        Currency.eur: 12,
       },
     ),
   ];

@@ -1,4 +1,4 @@
-import 'package:cash/features/sale/sale/view/widgets/products_sale_load_successful.dart';
+import 'package:cash/features/sale/sale/view/widgets/sale_load_successful.dart';
 import 'package:cash/features/sale/sale/controller/sale_page_state.dart';
 import 'package:cash/features/sale/sale/controller/sale_page_state_notifier.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class _SalePageState extends ConsumerState<SalePage> {
     return Scaffold(
       body: state.map(
         initial: (_) => Container(),
-        saleLoadSuccessful: (saleLoadSuccessful) => ProductsSaleLoadSuccessful(sale: saleLoadSuccessful.sale),
+        saleLoadSuccessful: (saleLoadSuccessful) => SaleLoadSuccessful(sale: saleLoadSuccessful.sale),
       ),
     );
   }

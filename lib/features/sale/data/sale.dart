@@ -8,7 +8,7 @@ part 'sale.g.dart';
 
 @freezed
 class Sale with _$Sale{
-  const factory Sale({PaymentMethod? paymentMethod, DateTime? date, Currency? currency, List<SaleItem>? items, double? sum}) = _Sale;
+  const factory Sale({PaymentMethod? paymentMethod, DateTime? date, Currency? currency, List<SaleItem>? items, Map<Currency, double>? sums}) = _Sale;
 
   factory Sale.fromJson(Map<String, Object?> json) => _$SaleFromJson(json);
 }

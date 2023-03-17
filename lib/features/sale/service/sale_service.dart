@@ -11,15 +11,15 @@ class SaleService {
 
 
   void createSale() {
-    _sale = Sale();
+    _sale = const Sale();
   }
 
   Sale loadSale() {
     return _sale;
   }
 
-  void updateSale({List<SaleItem>? saleItems, PaymentMethod? paymentMethod, double? sum}) {
-    _sale = _sale.copyWith(items: saleItems ?? _sale.items, paymentMethod: paymentMethod ?? _sale.paymentMethod);
+  void updateSale({List<SaleItem>? saleItems, PaymentMethod? paymentMethod, Map<Currency, double>? sums}) {
+    _sale = _sale.copyWith(items: saleItems ?? _sale.items, paymentMethod: paymentMethod ?? _sale.paymentMethod, sums: sums ?? _sale.sums);
     print(_sale);
   }
 }

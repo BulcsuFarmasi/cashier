@@ -1,11 +1,11 @@
 import 'package:cash/features/sale/data/sale.dart';
-import 'package:cash/features/sale/data/sale_item.dart';
 import 'package:cash/features/sale/sale/view/widgets/payment_method_selector.dart';
-import 'package:cash/features/sale/sale/view/widgets/product_tile.dart';
+import 'package:cash/features/sale/sale/view/widgets/sale_item_table.dart';
+import 'package:cash/features/sale/sale/view/widgets/sum_row.dart';
 import 'package:flutter/material.dart';
 
-class ProductsSaleLoadSuccessful extends StatelessWidget {
-  const ProductsSaleLoadSuccessful({super.key, required this.sale});
+class SaleLoadSuccessful extends StatelessWidget {
+  const SaleLoadSuccessful({super.key, required this.sale});
 
   final Sale sale;
 
@@ -37,37 +37,17 @@ class ProductsSaleLoadSuccessful extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sumStyle = Theme.of(context).textTheme.headlineMedium;
+
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: sale.items?.map((SaleItem saleItem) {
-                return ProductTile(
-                  saleItem: saleItem,
-                );
-              }).toList() ??
-              [],
-        ),
+        if (sale.items != null) SaleItemTable(saleItems: sale.items!),
         const SizedBox(
           height: 50,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Végösszeg: ',
-              style: sumStyle,
-            ),
-            // Text(
-            //   sale.sum != null ? '${sale.sum} ${sale.currency.name}' : '0 ${sale.currency.name}',
-            //   style: sumStyle,
-            // ),
-          ],
-        ),
+        SumRow(sums: sale.sums!),
         const SizedBox(
           height: 30,
         ),
@@ -78,7 +58,7 @@ class ProductsSaleLoadSuccessful extends StatelessWidget {
           height: 30,
         ),
         ElevatedButton(
-          onPressed: (sale.paymentMethod != null && sale.sum != null && sale.sum != 0)
+          onPressed: sale.paymentMethod != null
               ? () {
                   finalizeSale(context);
                 }
