@@ -1,6 +1,6 @@
 {
-    "name": "exhibition_register",
-    "short_name": "exhibition_register",
+    "name": "cash",
+    "short_name": "cash",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

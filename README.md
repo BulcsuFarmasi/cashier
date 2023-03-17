@@ -1,4 +1,4 @@
-# exhibition_register
+# cash
 
 A new Flutter project.
 
