@@ -1,6 +1,6 @@
-import 'package:cash/features/sale/data/currency.dart';
-import 'package:cash/features/sale/data/payment_method.dart';
-import 'package:cash/features/sale/data/sale_item.dart';
+import 'package:cashier/features/sale/data/currency.dart';
+import 'package:cashier/features/sale/data/payment_method.dart';
+import 'package:cashier/features/sale/data/sale_item.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'sale.freezed.dart';

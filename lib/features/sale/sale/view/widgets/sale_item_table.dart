@@ -1,6 +1,6 @@
-import 'package:cash/features/sale/data/currency.dart';
-import 'package:cash/features/sale/data/sale_item.dart';
-import 'package:cash/features/sale/sale/controller/sale_page_state_notifier.dart';
+import 'package:cashier/features/sale/data/currency.dart';
+import 'package:cashier/features/sale/data/sale_item.dart';
+import 'package:cashier/features/sale/sale/controller/sale_page_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,7 +26,7 @@ class _SaleItemTableState extends ConsumerState<SaleItemTable> {
   @override
   Widget build(BuildContext context) {
     return Table(
-      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
       children: widget.saleItems
           .map((SaleItem saleItem) => TableRow(
                 children: [

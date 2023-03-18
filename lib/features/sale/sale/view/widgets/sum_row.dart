@@ -1,4 +1,4 @@
-import 'package:cash/features/sale/data/currency.dart';
+import 'package:cashier/features/sale/data/currency.dart';
 import 'package:flutter/material.dart';
 
 class SumRow extends StatelessWidget {

@@ -1,15 +1,18 @@
-import 'package:cash/features/sale/data/sale.dart';
-import 'package:cash/features/sale/sale/view/widgets/payment_method_selector.dart';
-import 'package:cash/features/sale/sale/view/widgets/sale_item_table.dart';
-import 'package:cash/features/sale/sale/view/widgets/sum_row.dart';
+import 'package:cashier/features/sale/data/sale.dart';
+import 'package:cashier/features/sale/sale/controller/sale_page_state_notifier.dart';
+import 'package:cashier/features/sale/sale/view/widgets/currency_selector.dart';
+import 'package:cashier/features/sale/sale/view/widgets/payment_method_selector.dart';
+import 'package:cashier/features/sale/sale/view/widgets/sale_item_table.dart';
+import 'package:cashier/features/sale/sale/view/widgets/sum_row.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SaleLoadSuccessful extends StatelessWidget {
+class SaleLoadSuccessful extends ConsumerWidget {
   const SaleLoadSuccessful({super.key, required this.sale});
 
   final Sale sale;
 
-  void finalizeSale(BuildContext context) {
+  void finalizeSale(BuildContext context, WidgetRef ref) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -26,6 +29,7 @@ class SaleLoadSuccessful extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
+                  ref.read(salePageStateNotifierProvider.notifier).saveSale();
                   navigator.pop();
                 },
                 child: const Text('OK'),
@@ -36,9 +40,7 @@ class SaleLoadSuccessful extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,16 +53,27 @@ class SaleLoadSuccessful extends StatelessWidget {
         const SizedBox(
           height: 30,
         ),
-        PaymentMethodSelector(
-          paymentMethod: sale.paymentMethod,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            PaymentMethodSelector(
+              paymentMethod: sale.paymentMethod,
+            ),
+            const SizedBox(
+              width: 30,
+            ),
+            CurrencySelector(
+              currency: sale.currency,
+            ),
+          ],
         ),
         const SizedBox(
           height: 30,
         ),
         ElevatedButton(
-          onPressed: sale.paymentMethod != null
+          onPressed: sale.paymentMethod != null && sale.currency != null
               ? () {
-                  finalizeSale(context);
+                  finalizeSale(context, ref);
                 }
               : null,
           child: const Text('Fizetve'),

@@ -1,13 +1,17 @@
-import 'package:cash/features/sale/data/currency.dart';
-import 'package:cash/features/sale/data/payment_method.dart';
-import 'package:cash/features/sale/data/sale.dart';
-import 'package:cash/features/sale/data/sale_item.dart';
+import 'package:cashier/features/sale/data/currency.dart';
+import 'package:cashier/features/sale/data/payment_method.dart';
+import 'package:cashier/features/sale/data/sale.dart';
+import 'package:cashier/features/sale/data/sale_item.dart';
+import 'package:cashier/features/sale/service/sale_remote.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final Provider<SaleService> saleServiceProvider = Provider((Ref ref) => SaleService());
+final Provider<SaleService> saleServiceProvider = Provider((Ref ref) => SaleService(ref.read(saleRemote)));
 
 class SaleService {
+  SaleService(this._saleRemote);
+  final SaleRemote _saleRemote;
   late Sale _sale;
+
 
 
   void createSale() {
@@ -18,8 +22,13 @@ class SaleService {
     return _sale;
   }
 
-  void updateSale({List<SaleItem>? saleItems, PaymentMethod? paymentMethod, Map<Currency, double>? sums}) {
-    _sale = _sale.copyWith(items: saleItems ?? _sale.items, paymentMethod: paymentMethod ?? _sale.paymentMethod, sums: sums ?? _sale.sums);
-    print(_sale);
+  void updateSale({List<SaleItem>? saleItems, PaymentMethod? paymentMethod, Map<Currency, double>? sums, Currency? currency}) {
+    _sale = _sale.copyWith(items: saleItems ?? _sale.items, paymentMethod: paymentMethod ?? _sale.paymentMethod, sums: sums ?? _sale.sums, currency: currency ?? _sale.currency);
+  }
+
+  void saveSale() {
+    DateTime currentDate = DateTime.now();
+    _sale = _sale.copyWith(date: currentDate);
+    _saleRemote.saveSale(_sale);
   }
 }

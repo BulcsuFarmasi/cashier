@@ -1,4 +1,4 @@
-import 'package:cash/features/sale/data/sale.dart';
+import 'package:cashier/features/sale/data/sale.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'sale_page_state.freezed.dart';

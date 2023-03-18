@@ -1,6 +1,6 @@
-import 'package:cash/features/sale/sale/view/widgets/sale_load_successful.dart';
-import 'package:cash/features/sale/sale/controller/sale_page_state.dart';
-import 'package:cash/features/sale/sale/controller/sale_page_state_notifier.dart';
+import 'package:cashier/features/sale/sale/view/widgets/sale_load_successful.dart';
+import 'package:cashier/features/sale/sale/controller/sale_page_state.dart';
+import 'package:cashier/features/sale/sale/controller/sale_page_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

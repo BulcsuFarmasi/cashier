@@ -1,4 +1,4 @@
-name: cash
+name: cashier
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -40,6 +40,8 @@ dependencies:
   riverpod: ^2.3.2
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.0
+  firebase_core: ^2.8.0
+  cloud_firestore: ^4.4.5
 
 dev_dependencies:
   flutter_test:

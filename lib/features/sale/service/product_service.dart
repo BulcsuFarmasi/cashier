@@ -1,5 +1,5 @@
-import 'package:cash/features/sale/data/currency.dart';
-import 'package:cash/features/sale/data/product.dart';
+import 'package:cashier/features/sale/data/currency.dart';
+import 'package:cashier/features/sale/data/product.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final Provider<ProductService> productServiceProvider = Provider((_) => ProductService());

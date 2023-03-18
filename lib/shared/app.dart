@@ -1,4 +1,4 @@
-import 'package:cash/features/sale/sale/view/pages/sale_page.dart';
+import 'package:cashier/features/sale/sale/view/pages/sale_page.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -8,7 +8,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Cashier',
       theme: ThemeData(
         // This is the theme of your application.
         //

@@ -1,10 +1,10 @@
-import 'package:cash/features/sale/data/currency.dart';
-import 'package:cash/features/sale/data/payment_method.dart';
-import 'package:cash/features/sale/data/product.dart';
-import 'package:cash/features/sale/data/sale.dart';
-import 'package:cash/features/sale/data/sale_item.dart';
-import 'package:cash/features/sale/service/product_service.dart';
-import 'package:cash/features/sale/service/sale_service.dart';
+import 'package:cashier/features/sale/data/currency.dart';
+import 'package:cashier/features/sale/data/payment_method.dart';
+import 'package:cashier/features/sale/data/product.dart';
+import 'package:cashier/features/sale/data/sale.dart';
+import 'package:cashier/features/sale/data/sale_item.dart';
+import 'package:cashier/features/sale/service/product_service.dart';
+import 'package:cashier/features/sale/service/sale_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final Provider<SaleRepository> saleRepositoryProvider = Provider<SaleRepository>(
@@ -27,7 +27,7 @@ class SaleRepository {
     return _saleService.loadSale();
   }
 
-  Sale updateSale({PaymentMethod? paymentMethod, SaleItem? saleItem}) {
+  Sale updateSale({PaymentMethod? paymentMethod, SaleItem? saleItem, Currency? currency}) {
     if (saleItem != null) {
       Sale sale = _saleService.loadSale();
       final int saleItemIndex = sale.items!.indexWhere((SaleItem item) => saleItem!.product.id == item.product.id);
@@ -43,9 +43,13 @@ class SaleRepository {
       final Map<Currency, double> sums = _calculateSums(sale);
       _saleService.updateSale(sums: sums);
     } else {
-      _saleService.updateSale(paymentMethod: paymentMethod);
+      _saleService.updateSale(paymentMethod: paymentMethod, currency: currency);
     }
     return _saleService.loadSale();
+  }
+
+  void saveSale() {
+    _saleService.saveSale();
   }
 
   Map<Currency, double> _calculateItemPrice(SaleItem saleItem) {

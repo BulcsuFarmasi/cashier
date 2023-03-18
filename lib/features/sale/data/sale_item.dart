@@ -1,5 +1,5 @@
-import 'package:cash/features/sale/data/currency.dart';
-import 'package:cash/features/sale/data/product.dart';
+import 'package:cashier/features/sale/data/currency.dart';
+import 'package:cashier/features/sale/data/product.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'sale_item.freezed.dart';
