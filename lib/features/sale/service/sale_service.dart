@@ -22,6 +22,10 @@ class SaleService {
     return _sale;
   }
 
+  Stream<List<Sale>> loadSales()  {
+    return _saleRemote.loadSales();
+  }
+
   void updateSale({List<SaleItem>? saleItems, PaymentMethod? paymentMethod, Map<Currency, double>? sums, Currency? currency}) {
     _sale = _sale.copyWith(items: saleItems ?? _sale.items, paymentMethod: paymentMethod ?? _sale.paymentMethod, sums: sums ?? _sale.sums, currency: currency ?? _sale.currency);
   }
