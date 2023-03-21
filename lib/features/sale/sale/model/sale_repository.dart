@@ -17,9 +17,9 @@ class SaleRepository {
   final ProductService _productService;
   final SaleService _saleService;
 
-  Sale createSale() {
+  Future<Sale> createSale() async {
     _saleService.createSale();
-    final List<SaleItem> saleItems = _productService.products
+    final List<SaleItem> saleItems =(await  _productService.loadProducts())
         .map((Product product) =>
             SaleItem(product: product, amount: 0, prices: {for (Currency currency in Currency.values) currency: 0}))
         .toList();

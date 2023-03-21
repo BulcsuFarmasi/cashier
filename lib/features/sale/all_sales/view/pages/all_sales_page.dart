@@ -26,11 +26,13 @@ class _AllPageStateState extends ConsumerState<AllSalesPage> {
   @override
   Widget build(BuildContext context) {
     final AllSalesPageState state = ref.watch(allSalesPageNotifierProvider);
-    return state.map(
-        initial: (_) => Container(),
-        inProgress: (_) => const AllSalesInProgress(),
-        successful: (successful) => AllSalesSuccessful(
-              salesReport: successful.salesReport,
-            ));
+    return Scaffold(
+      body: state.map(
+          initial: (_) => Container(),
+          inProgress: (_) => const AllSalesInProgress(),
+          successful: (successful) => AllSalesSuccessful(
+                salesReport: successful.salesReport,
+              )),
+    );
   }
 }

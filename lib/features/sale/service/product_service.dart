@@ -1,36 +1,18 @@
 import 'package:cashier/features/sale/data/currency.dart';
 import 'package:cashier/features/sale/data/product.dart';
+import 'package:cashier/features/sale/service/product_remote.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final Provider<ProductService> productServiceProvider = Provider((_) => ProductService());
+final Provider<ProductService> productServiceProvider = Provider((Ref ref) => ProductService(ref.read(productRemoteProvider)));
 
 class ProductService {
-  final List<Product> _products = const [
-    Product(
-      'EuntBxNBQb',
-      'Poló',
-      {
-        Currency.huf: 11000,
-        Currency.eur: 28,
-      },
-    ),
-    Product(
-      'ihUkvznbWu',
-      'Pulóver',
-      {
-        Currency.huf: 20000,
-        Currency.eur: 50,
-      },
-    ),
-    Product(
-      'FtfZoEtpry',
-      'Sapka',
-      {
-        Currency.huf: 1800,
-        Currency.eur: 12,
-      },
-    ),
-  ];
+  ProductService(this._productRemote);
 
-  List<Product> get products => _products;
+  final ProductRemote _productRemote;
+
+
+  Future<List<Product>> loadProducts() async {
+    return _productRemote.loadSales();
+  }
 }
+

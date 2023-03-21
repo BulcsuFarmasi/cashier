@@ -18,8 +18,8 @@ class SalePageStateNotifier extends StateNotifier<SalePageState> {
 
   final SaleRepository _saleRepository;
 
-  void createSale() {
-    final Sale sale = _saleRepository.createSale();
+  void createSale() async {
+    final Sale sale = await _saleRepository.createSale();
     state = SalePageState.saleLoadSuccessful(sale);
   }
 
@@ -28,9 +28,9 @@ class SalePageStateNotifier extends StateNotifier<SalePageState> {
     state = SalePageState.saleLoadSuccessful(sale);
   }
 
-  void saveSale() {
+  void saveSale() async {
     _saleRepository.saveSale();
-    final Sale sale = _saleRepository.createSale();
+    final Sale sale = await _saleRepository.createSale();
     state = SalePageState.saleLoadSuccessful(sale);
   }
 }
