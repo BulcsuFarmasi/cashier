@@ -23,6 +23,10 @@ class AllSalesRepository {
     return _saleService.loadSales().map(_convertSalesToSalesReport);
   }
 
+  void deleteSales(List<String> saleIds) {
+    _saleService.deleteSales(saleIds);
+  }
+
   SalesReport _convertSalesToSalesReport(List<Sale> sales) {
     sales.sort((Sale aSale, Sale bSale) => aSale.date!.compareTo(bSale.date!));
 

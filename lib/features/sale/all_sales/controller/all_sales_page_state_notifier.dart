@@ -21,4 +21,8 @@ class AllSalesPageStateNotifier extends StateNotifier<AllSalesPageState> {
       state = AllSalesPageState.successful(salesReport);
     });
   }
+
+  void deleteSales(List<String> saleIds) {
+    _allSalesRepository.deleteSales(saleIds);
+  }
 }

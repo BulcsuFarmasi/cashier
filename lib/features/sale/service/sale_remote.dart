@@ -3,7 +3,7 @@ import 'package:cashier/shared/firebase_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final Provider<SaleRemote> saleRemote = Provider<SaleRemote>((Ref ref) => SaleRemote(ref.read(firebaseProvider)));
+final Provider<SaleRemote> saleRemote = Provider<SaleRemote>((Ref ref) => SaleRemote(ref.read(firestoreProvider)));
 
 class SaleRemote {
   SaleRemote(this._firebaseFirestore) {
@@ -25,5 +25,12 @@ class SaleRemote {
         return sale.copyWith(id: doc.id);
       }).toList();
     });
+  }
+
+  void deleteSales(List<String> salesIds) {
+    for (String saleId in salesIds) {
+      print(saleId);
+      _collection.doc(saleId).delete();
+    }
   }
 }

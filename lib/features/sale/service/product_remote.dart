@@ -3,7 +3,7 @@ import 'package:cashier/shared/firebase_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final Provider<ProductRemote> productRemoteProvider = Provider<ProductRemote>((Ref ref) => ProductRemote(ref.read(firebaseProvider)));
+final Provider<ProductRemote> productRemoteProvider = Provider<ProductRemote>((Ref ref) => ProductRemote(ref.read(firestoreProvider)));
 
 class ProductRemote {
   ProductRemote(this._firebaseFirestore) {
