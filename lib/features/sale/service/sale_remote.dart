@@ -29,7 +29,6 @@ class SaleRemote {
 
   void deleteSales(List<String> salesIds) {
     for (String saleId in salesIds) {
-      print(saleId);
       _collection.doc(saleId).delete();
     }
   }

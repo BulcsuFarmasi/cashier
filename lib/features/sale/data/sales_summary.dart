@@ -5,7 +5,9 @@ part 'sales_summary.freezed.dart';
 
 @freezed
 class SalesSummary with _$SalesSummary {
-  const factory SalesSummary(
-      {required Map<CurrencyPaymentMethodTuple, double> sums,
-      required Map<CurrencyPaymentMethodTuple, int> amounts}) = _SalesSummary;
+  const factory SalesSummary({
+    required Map<CurrencyPaymentMethodTuple, double> sums,
+    required Map<CurrencyPaymentMethodTuple, double> discounts,
+    required Map<CurrencyPaymentMethodTuple, int> amounts,
+  }) = _SalesSummary;
 }

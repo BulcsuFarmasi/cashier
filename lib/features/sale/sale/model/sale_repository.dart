@@ -32,6 +32,7 @@ class SaleRepository {
     SaleItem? saleItem,
     Currency? currency,
     bool? preOrder,
+    Map<Currency, double>? discounts,
   }) {
     if (saleItem != null) {
       Sale sale = _saleService.loadSale();
@@ -47,6 +48,12 @@ class SaleRepository {
       sale = _saleService.loadSale();
       final Map<Currency, double> sums = _calculateSums(sale);
       _saleService.updateSale(sums: sums);
+    } else if (discounts != null) {
+      _saleService.updateSale(discounts: discounts);
+      Sale sale = _saleService.loadSale();
+      final Map<Currency, double> sums = _calculateSums(sale);
+      _saleService.updateSale(sums: sums);
+
     } else {
       _saleService.updateSale(
         paymentMethod: paymentMethod,
@@ -73,6 +80,10 @@ class SaleRepository {
         sums[price.key] = sums[price.key] != null ? sums[price.key]! + price.value : price.value;
       }
     }
+
+    sale.discounts?.forEach((Currency currency, double amount) {
+      sums[currency] = sums[currency]! + sale.discounts![currency]!;
+    });
 
     return sums;
   }

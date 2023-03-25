@@ -16,29 +16,30 @@ class SaleLoadSuccessful extends ConsumerWidget {
 
   void finalizeSale(BuildContext context, WidgetRef ref) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          final NavigatorState navigator = Navigator.of(context);
-          return AlertDialog(
-            title: const Text("Megerősítés"),
-            content: const Text('Biztosan le akarod zárni a vásárlást?'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  navigator.pop();
-                },
-                child: const Text('Mégse'),
-              ),
-              TextButton(
-                onPressed: () {
-                  ref.read(salePageStateNotifierProvider.notifier).saveSale();
-                  navigator.pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        final NavigatorState navigator = Navigator.of(context);
+        return AlertDialog(
+          title: const Text("Megerősítés"),
+          content: const Text('Biztosan le akarod zárni a vásárlást?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                navigator.pop();
+              },
+              child: const Text('Mégse'),
+            ),
+            TextButton(
+              onPressed: () {
+                ref.read(salePageStateNotifierProvider.notifier).saveSale();
+                navigator.pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

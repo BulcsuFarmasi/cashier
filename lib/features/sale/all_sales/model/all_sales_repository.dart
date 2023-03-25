@@ -43,6 +43,10 @@ class AllSalesRepository {
       for (CurrencyPaymentMethodTuple currencyPaymentMethod in _currencyPaymentMethodService.currencyPaymentMethod)
         currencyPaymentMethod: 0
     };
+    final Map<CurrencyPaymentMethodTuple, double> discounts = {
+      for (CurrencyPaymentMethodTuple currencyPaymentMethod in _currencyPaymentMethodService.currencyPaymentMethod)
+        currencyPaymentMethod: 0
+    };
     final Map<CurrencyPaymentMethodTuple, int> amounts = {
       for (CurrencyPaymentMethodTuple currencyPaymentMethod in _currencyPaymentMethodService.currencyPaymentMethod)
         currencyPaymentMethod: 0
@@ -51,10 +55,12 @@ class AllSalesRepository {
     for (Sale sale in sales) {
       sums[CurrencyPaymentMethodTuple(sale.currency!, sale.paymentMethod!)] =
           sums[CurrencyPaymentMethodTuple(sale.currency!, sale.paymentMethod!)]! + sale.sums![sale.currency]!;
+      discounts[CurrencyPaymentMethodTuple(sale.currency!, sale.paymentMethod!)] =
+          discounts[CurrencyPaymentMethodTuple(sale.currency!, sale.paymentMethod!)]! + sale.discounts![sale.currency]!;
       amounts[CurrencyPaymentMethodTuple(sale.currency!, sale.paymentMethod!)] =
           amounts[CurrencyPaymentMethodTuple(sale.currency!, sale.paymentMethod!)]! + 1;
     }
 
-    return SalesSummary(sums: sums, amounts: amounts);
+    return SalesSummary(sums: sums, discounts: discounts, amounts: amounts);
   }
 }
