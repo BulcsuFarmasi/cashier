@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class AllSalesSuccessful extends StatelessWidget {
   const AllSalesSuccessful({super.key, required this.salesReport});
-  
+
   final SalesReport salesReport;
 
   @override

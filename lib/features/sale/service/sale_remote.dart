@@ -15,7 +15,6 @@ class SaleRemote {
   static const collectionName = "sales";
 
   void saveSale(Sale sale) {
-    print(sale.toJson());
     _collection.add(sale.toJson());
   }
 

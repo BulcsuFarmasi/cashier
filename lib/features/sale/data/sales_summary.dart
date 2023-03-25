@@ -1,4 +1,3 @@
-import 'package:cashier/features/sale/data/currency.dart';
 import 'package:cashier/features/sale/data/currency_payment_method_tuple.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

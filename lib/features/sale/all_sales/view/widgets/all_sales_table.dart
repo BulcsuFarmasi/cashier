@@ -25,37 +25,37 @@ class _AllSalesTableState extends ConsumerState<AllSalesTable> {
             const Text('Vásárlás dátuma'),
             ...widget.salesReport.currencyPaymentMethods
                 .map((CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
-                    'Végösszeg (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
+                'Végösszeg (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
                 .toList(),
             ...widget.salesReport.currencyPaymentMethods
                 .map((CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
-                    'Vásárlás (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
+                'Vásárlás (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
                 .toList()
           ],
         ),
         ...widget.salesReport.sales
             .map(
               (Sale sale) => TableRow(
-                children: [
-                  Checkbox(onChanged: (bool? checked) {}, value: false),
-                  Text('${sale.date}'),
-                  ...widget.salesReport.currencyPaymentMethods.map(
+            children: [
+              Checkbox(onChanged: (bool? checked) {}, value: false),
+              Text('${sale.date}'),
+              ...widget.salesReport.currencyPaymentMethods.map(
                     (CurrencyPaymentMethodTuple currencyPaymentMethodTuple) => Text(
-                        currencyPaymentMethodTuple.currency == sale.currency &&
-                                currencyPaymentMethodTuple.paymentMethod == sale.paymentMethod
-                            ? '${sale.sums![sale.currency]}'
-                            : ''),
-                  ),
-                  ...widget.salesReport.currencyPaymentMethods
-                      .map((CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
-                          sale.currency == currencyPaymentMethod.currency &&
-                                  sale.paymentMethod == currencyPaymentMethod.paymentMethod
-                              ? '1'
-                              : ''))
-                      .toList()
-                ],
+                    currencyPaymentMethodTuple.currency == sale.currency &&
+                        currencyPaymentMethodTuple.paymentMethod == sale.paymentMethod
+                        ? '${sale.sums![sale.currency]}'
+                        : ''),
               ),
-            )
+              ...widget.salesReport.currencyPaymentMethods
+                  .map((CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
+                  sale.currency == currencyPaymentMethod.currency &&
+                      sale.paymentMethod == currencyPaymentMethod.paymentMethod
+                      ? '1'
+                      : ''))
+                  .toList()
+            ],
+          ),
+        )
             .toList(),
         TableRow(
           children: [
