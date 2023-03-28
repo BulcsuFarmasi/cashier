@@ -9,7 +9,7 @@ final Provider<CurrencyPaymentMethodService> currencyPaymentMethodProvider =
 class CurrencyPaymentMethodService {
   List<CurrencyPaymentMethodTuple>? _currencyPaymentMethods;
 
-  List<CurrencyPaymentMethodTuple> get currencyPaymentMethod {
+  List<CurrencyPaymentMethodTuple> get currencyPaymentMethods {
     if (_currencyPaymentMethods == null) {
       _currencyPaymentMethods = [];
       for (Currency currency in Currency.values) {

@@ -1,5 +1,7 @@
 import 'package:cashier/features/sale/all_sales/controller/all_sales_page_state_notifier.dart';
+import 'package:cashier/features/sale/data/currency.dart';
 import 'package:cashier/features/sale/data/currency_payment_method_tuple.dart';
+import 'package:cashier/features/sale/data/product.dart';
 import 'package:cashier/features/sale/data/sale.dart';
 import 'package:cashier/features/sale/data/sales_report.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,96 @@ class AllSalesTable extends ConsumerStatefulWidget {
 class _AllSalesTableState extends ConsumerState<AllSalesTable> {
   List<String> _markedSaleIds = [];
   bool _allSalesMarked = false;
+
+  TableRow _buildTableHeader() {
+    return TableRow(
+      children: [
+        Column(
+          children: [
+            const Text('Mindet kijelöl'),
+            Checkbox(value: _allSalesMarked, onChanged: _markAllSales),
+          ],
+        ),
+        const Text('Vásárlás dátuma'),
+        for (Product product in widget.salesReport.products) ...[
+          Text('${product.name} (db)'),
+          for (Currency currency in Currency.values) Text('${product.name} (${currency.name})')
+        ],
+        const Text('Előrendelés'),
+        ...widget.salesReport.currencyPaymentMethods
+            .map((CurrencyPaymentMethodTuple currencyPaymentMethod) =>
+                Text('Végösszeg (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
+            .toList(),
+        ...widget.salesReport.currencyPaymentMethods
+            .map((CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
+                'Kedvezmémy (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
+            .toList(),
+        ...widget.salesReport.currencyPaymentMethods
+            .map((CurrencyPaymentMethodTuple currencyPaymentMethod) =>
+                Text('Vásárlás (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
+            .toList()
+      ],
+    );
+  }
+
+  TableRow _buildTableRow(Sale sale) {
+    return TableRow(
+      children: [
+        Checkbox(
+            onChanged: (bool? checked) {
+              _markSale(checked, sale.id!);
+            },
+            value: _markedSaleIds.contains(sale.id)),
+        Text('${sale.date}'),
+        for (Product product in widget.salesReport.products) ...[
+          Text('${sale.itemsByProductId![product.id]!.amount}'),
+          for (Currency currency in Currency.values)
+            Text(currency == sale.currency ? '${sale.itemsByProductId![product.id]!.prices[currency]}' : ''),
+        ],
+        Text(sale.preOrder != null && sale.preOrder! ? 'Igen' : 'Nem'),
+        ...widget.salesReport.currencyPaymentMethods.map(
+          (CurrencyPaymentMethodTuple currencyPaymentMethodTuple) => Text(
+              currencyPaymentMethodTuple.currency == sale.currency &&
+                      currencyPaymentMethodTuple.paymentMethod == sale.paymentMethod
+                  ? '${sale.sums![sale.currency]}'
+                  : ''),
+        ),
+        ...widget.salesReport.currencyPaymentMethods.map(
+          (CurrencyPaymentMethodTuple currencyPaymentMethodTuple) => Text(
+              currencyPaymentMethodTuple.currency == sale.currency &&
+                      currencyPaymentMethodTuple.paymentMethod == sale.paymentMethod &&
+                      sale.discounts?[sale.currency] != null
+                  ? '${sale.discounts![sale.currency]}'
+                  : ''),
+        ),
+        ...widget.salesReport.currencyPaymentMethods
+            .map((CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
+                sale.currency == currencyPaymentMethod.currency &&
+                        sale.paymentMethod == currencyPaymentMethod.paymentMethod
+                    ? '1'
+                    : ''))
+            .toList()
+      ],
+    );
+  }
+
+  TableRow _buildSummaryRow() {
+    return TableRow(
+      children: [
+        Container(),
+        Container(),
+        for (Product product in widget.salesReport.products) ...[
+          Text('${widget.salesReport.salesSummary.productSummaries[product.id]!.amount}'),
+          for (Currency currency in Currency.values)
+            Text('${widget.salesReport.salesSummary.productSummaries[product.id]!.prices[currency]}'),
+        ],
+        Container(),
+        ...widget.salesReport.salesSummary.sums.values.map((double sum) => Text('$sum')).toList(),
+        ...widget.salesReport.salesSummary.discounts.values.map((double discount) => Text('$discount')).toList(),
+        ...widget.salesReport.salesSummary.amounts.values.map((int amount) => Text('$amount')).toList(),
+      ],
+    );
+  }
 
   void _deleteSales() {
     showDialog(
@@ -67,6 +159,7 @@ class _AllSalesTableState extends ConsumerState<AllSalesTable> {
       } else {
         _markedSaleIds.remove(saleId);
       }
+      _allSalesMarked = _markedSaleIds.length == widget.salesReport.sales.length;
     });
   }
 
@@ -79,73 +172,9 @@ class _AllSalesTableState extends ConsumerState<AllSalesTable> {
         Table(
           border: TableBorder.all(),
           children: [
-            TableRow(
-              children: [
-                Column(
-                  children: [
-                    const Text('Mindet kijelöl'),
-                    Checkbox(value: _allSalesMarked, onChanged: _markAllSales),
-                  ],
-                ),
-                const Text('Vásárlás dátuma'),
-                ...widget.salesReport.currencyPaymentMethods
-                    .map((CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
-                        'Végösszeg (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
-                    .toList(),
-                ...widget.salesReport.currencyPaymentMethods
-                    .map((CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
-                    'Kedvezmémy (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
-                    .toList(),
-                ...widget.salesReport.currencyPaymentMethods
-                    .map((CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
-                        'Vásárlás (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
-                    .toList()
-              ],
-            ),
-            ...widget.salesReport.sales
-                .map(
-                  (Sale sale) => TableRow(
-                    children: [
-                      Checkbox(
-                          onChanged: (bool? checked) {
-                            _markSale(checked, sale.id!);
-                          },
-                          value: _markedSaleIds.contains(sale.id)),
-                      Text('${sale.date}'),
-                      ...widget.salesReport.currencyPaymentMethods.map(
-                        (CurrencyPaymentMethodTuple currencyPaymentMethodTuple) => Text(
-                            currencyPaymentMethodTuple.currency == sale.currency &&
-                                    currencyPaymentMethodTuple.paymentMethod == sale.paymentMethod
-                                ? '${sale.sums![sale.currency]}'
-                                : ''),
-                      ),
-                      ...widget.salesReport.currencyPaymentMethods.map(
-                            (CurrencyPaymentMethodTuple currencyPaymentMethodTuple) => Text(
-                            currencyPaymentMethodTuple.currency == sale.currency &&
-                                currencyPaymentMethodTuple.paymentMethod == sale.paymentMethod
-                                ? '${sale.discounts![sale.currency]}'
-                                : ''),
-                      ),
-                      ...widget.salesReport.currencyPaymentMethods
-                          .map((CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
-                              sale.currency == currencyPaymentMethod.currency &&
-                                      sale.paymentMethod == currencyPaymentMethod.paymentMethod
-                                  ? '1'
-                                  : ''))
-                          .toList()
-                    ],
-                  ),
-                )
-                .toList(),
-            TableRow(
-              children: [
-                Container(),
-                Container(),
-                ...widget.salesReport.salesSummary.sums.values.map((double sum) => Text('$sum')).toList(),
-                ...widget.salesReport.salesSummary.discounts.values.map((double discount) => Text('$discount')).toList(),
-                ...widget.salesReport.salesSummary.amounts.values.map((int amount) => Text('$amount')).toList(),
-              ],
-            ),
+            _buildTableHeader(),
+            ...widget.salesReport.sales.map(_buildTableRow).toList(),
+            _buildSummaryRow(),
           ],
         ),
       ],

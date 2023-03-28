@@ -15,6 +15,7 @@ class Sale with _$Sale {
       DateTime? date,
       Currency? currency,
       List<SaleItem>? items,
+      Map<String, SaleItem>? itemsByProductId,
       Map<Currency, double>? sums,
       bool? preOrder,
       Map<Currency, double>? discounts}) = _Sale;
