@@ -17,9 +17,9 @@ class SaleRepository {
   final ProductService _productService;
   final SaleService _saleService;
 
-  Sale createSale() {
+  Future<Sale> createSale() async {
     _saleService.createSale();
-    final List<SaleItem> saleItems = _productService.products
+    final List<SaleItem> saleItems = (await _productService.loadProducts())
         .map((Product product) =>
             SaleItem(product: product, amount: 0, prices: {for (Currency currency in Currency.values) currency: 0}))
         .toList();
@@ -27,7 +27,13 @@ class SaleRepository {
     return _saleService.loadSale();
   }
 
-  Sale updateSale({PaymentMethod? paymentMethod, SaleItem? saleItem, Currency? currency}) {
+  Sale updateSale({
+    PaymentMethod? paymentMethod,
+    SaleItem? saleItem,
+    Currency? currency,
+    bool? preOrder,
+    Map<Currency, double>? discounts,
+  }) {
     if (saleItem != null) {
       Sale sale = _saleService.loadSale();
       final int saleItemIndex = sale.items!.indexWhere((SaleItem item) => saleItem!.product.id == item.product.id);
@@ -42,8 +48,18 @@ class SaleRepository {
       sale = _saleService.loadSale();
       final Map<Currency, double> sums = _calculateSums(sale);
       _saleService.updateSale(sums: sums);
+    } else if (discounts != null) {
+      _saleService.updateSale(discounts: discounts);
+      Sale sale = _saleService.loadSale();
+      final Map<Currency, double> sums = _calculateSums(sale);
+      _saleService.updateSale(sums: sums);
+
     } else {
-      _saleService.updateSale(paymentMethod: paymentMethod, currency: currency);
+      _saleService.updateSale(
+        paymentMethod: paymentMethod,
+        currency: currency,
+        preOrder: preOrder,
+      );
     }
     return _saleService.loadSale();
   }
@@ -64,6 +80,10 @@ class SaleRepository {
         sums[price.key] = sums[price.key] != null ? sums[price.key]! + price.value : price.value;
       }
     }
+
+    sale.discounts?.forEach((Currency currency, double amount) {
+      sums[currency] = sums[currency]! + sale.discounts![currency]!;
+    });
 
     return sums;
   }

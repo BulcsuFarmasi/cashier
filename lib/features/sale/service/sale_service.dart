@@ -9,10 +9,9 @@ final Provider<SaleService> saleServiceProvider = Provider((Ref ref) => SaleServ
 
 class SaleService {
   SaleService(this._saleRemote);
+
   final SaleRemote _saleRemote;
   late Sale _sale;
-
-
 
   void createSale() {
     _sale = const Sale();
@@ -22,13 +21,35 @@ class SaleService {
     return _sale;
   }
 
-  void updateSale({List<SaleItem>? saleItems, PaymentMethod? paymentMethod, Map<Currency, double>? sums, Currency? currency}) {
-    _sale = _sale.copyWith(items: saleItems ?? _sale.items, paymentMethod: paymentMethod ?? _sale.paymentMethod, sums: sums ?? _sale.sums, currency: currency ?? _sale.currency);
+  Stream<List<Sale>> loadSales() {
+    return _saleRemote.loadSales();
+  }
+
+  void updateSale({
+    List<SaleItem>? saleItems,
+    PaymentMethod? paymentMethod,
+    Map<Currency, double>? sums,
+    Currency? currency,
+    bool? preOrder,
+    Map<Currency, double>? discounts,
+  }) {
+    _sale = _sale.copyWith(
+        items: saleItems ?? _sale.items,
+        paymentMethod: paymentMethod ?? _sale.paymentMethod,
+        sums: sums ?? _sale.sums,
+        currency: currency ?? _sale.currency,
+        preOrder: preOrder ?? _sale.preOrder,
+        discounts: discounts ?? _sale.discounts,
+    );
   }
 
   void saveSale() {
     DateTime currentDate = DateTime.now();
     _sale = _sale.copyWith(date: currentDate);
     _saleRemote.saveSale(_sale);
+  }
+
+  void deleteSales(List<String> saleIds) {
+    _saleRemote.deleteSales(saleIds);
   }
 }

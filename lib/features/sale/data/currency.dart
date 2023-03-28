@@ -5,4 +5,14 @@ enum Currency {
   const Currency(this.name);
 
   final String name;
+
+  @override
+  String toString() {
+    switch(this) {
+      case Currency.huf:
+        return "huf";
+      case Currency.eur:
+        return "eur";
+    }
+  }
 }

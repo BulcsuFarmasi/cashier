@@ -18,19 +18,31 @@ class SalePageStateNotifier extends StateNotifier<SalePageState> {
 
   final SaleRepository _saleRepository;
 
-  void createSale() {
-    final Sale sale = _saleRepository.createSale();
+  void createSale() async {
+    final Sale sale = await _saleRepository.createSale();
     state = SalePageState.saleLoadSuccessful(sale);
   }
 
-  void updateSale({PaymentMethod? paymentMethod, SaleItem? saleItem, Currency? currency}) {
-    final Sale sale = _saleRepository.updateSale(paymentMethod: paymentMethod, saleItem: saleItem, currency: currency);
+  void updateSale({
+    PaymentMethod? paymentMethod,
+    SaleItem? saleItem,
+    Currency? currency,
+    bool? preOrder,
+    Map<Currency, double>? discounts,
+  }) {
+    final Sale sale = _saleRepository.updateSale(
+      paymentMethod: paymentMethod,
+      saleItem: saleItem,
+      currency: currency,
+      preOrder: preOrder,
+      discounts: discounts
+    );
     state = SalePageState.saleLoadSuccessful(sale);
   }
 
-  void saveSale() {
+  void saveSale() async {
     _saleRepository.saveSale();
-    final Sale sale = _saleRepository.createSale();
+    final Sale sale = await _saleRepository.createSale();
     state = SalePageState.saleLoadSuccessful(sale);
   }
 }

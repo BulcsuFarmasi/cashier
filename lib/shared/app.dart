@@ -1,3 +1,4 @@
+import 'package:cashier/features/sale/all_sales/view/pages/all_sales_page.dart';
 import 'package:cashier/features/sale/sale/view/pages/sale_page.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,7 @@ class App extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (_) => const SalePage(),
+        AllSalesPage.routeName: (_) => const AllSalesPage(),
       },
     );
   }
