@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AllSalesTable extends ConsumerStatefulWidget {
-  const AllSalesTable(this.salesReport, {super.key});
+  const AllSalesTable({required this.salesReport, super.key});
 
   final SalesReport salesReport;
 
