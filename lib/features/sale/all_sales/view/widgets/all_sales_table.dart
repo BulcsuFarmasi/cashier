@@ -34,7 +34,6 @@ class _AllSalesTableState extends ConsumerState<AllSalesTable> {
           Text('${product.name} (db)'),
           for (Currency currency in Currency.values) Text('${product.name} (${currency.name})')
         ],
-        const Text('Előrendelés'),
         ...widget.salesReport.currencyPaymentMethods
             .map((CurrencyPaymentMethodTuple currencyPaymentMethod) =>
                 Text('Végösszeg (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
@@ -46,7 +45,8 @@ class _AllSalesTableState extends ConsumerState<AllSalesTable> {
         ...widget.salesReport.currencyPaymentMethods
             .map((CurrencyPaymentMethodTuple currencyPaymentMethod) =>
                 Text('Vásárlás (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
-            .toList()
+            .toList(),
+        const Text('Megjegyzés')
       ],
     );
   }
@@ -65,7 +65,6 @@ class _AllSalesTableState extends ConsumerState<AllSalesTable> {
           for (Currency currency in Currency.values)
             Text(currency == sale.currency ? '${sale.itemsByProductId![product.id]!.prices[currency]}' : ''),
         ],
-        Text(sale.preOrder != null && sale.preOrder! ? 'Igen' : 'Nem'),
         ...widget.salesReport.currencyPaymentMethods.map(
           (CurrencyPaymentMethodTuple currencyPaymentMethodTuple) => Text(
               currencyPaymentMethodTuple.currency == sale.currency &&
@@ -87,7 +86,8 @@ class _AllSalesTableState extends ConsumerState<AllSalesTable> {
                         sale.paymentMethod == currencyPaymentMethod.paymentMethod
                     ? '1'
                     : ''))
-            .toList()
+            .toList(),
+        Text(sale.comment ?? ''),
       ],
     );
   }
@@ -102,10 +102,10 @@ class _AllSalesTableState extends ConsumerState<AllSalesTable> {
           for (Currency currency in Currency.values)
             Text('${widget.salesReport.salesSummary.productSummaries[product.id]!.prices[currency]}'),
         ],
-        Container(),
         ...widget.salesReport.salesSummary.sums.values.map((double sum) => Text('$sum')).toList(),
         ...widget.salesReport.salesSummary.discounts.values.map((double discount) => Text('$discount')).toList(),
         ...widget.salesReport.salesSummary.amounts.values.map((int amount) => Text('$amount')).toList(),
+        Container(),
       ],
     );
   }

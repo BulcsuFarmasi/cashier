@@ -1,9 +1,9 @@
 import 'package:cashier/features/sale/data/sale.dart';
 import 'package:cashier/features/sale/sale/controller/sale_page_state_notifier.dart';
+import 'package:cashier/features/sale/sale/view/widgets/comment_field.dart';
 import 'package:cashier/features/sale/sale/view/widgets/currency_selector.dart';
 import 'package:cashier/features/sale/sale/view/widgets/discounts.dart';
 import 'package:cashier/features/sale/sale/view/widgets/payment_method_selector.dart';
-import 'package:cashier/features/sale/sale/view/widgets/pre_order.dart';
 import 'package:cashier/features/sale/sale/view/widgets/sale_item_table.dart';
 import 'package:cashier/features/sale/sale/view/widgets/sum_row.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +77,7 @@ class SaleLoadSuccessful extends ConsumerWidget {
         const SizedBox(
           height: 30,
         ),
-        PreOrder(sale.preOrder),
+       CommentField(comment: sale.comment,),
         const SizedBox(
           height: 30,
         ),

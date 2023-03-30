@@ -27,14 +27,15 @@ class SalePageStateNotifier extends StateNotifier<SalePageState> {
     PaymentMethod? paymentMethod,
     SaleItem? saleItem,
     Currency? currency,
-    bool? preOrder,
+    String? comment,
     Map<Currency, double>? discounts,
+
   }) {
     final Sale sale = _saleRepository.updateSale(
       paymentMethod: paymentMethod,
       saleItem: saleItem,
       currency: currency,
-      preOrder: preOrder,
+      comment: comment,
       discounts: discounts
     );
     state = SalePageState.saleLoadSuccessful(sale);

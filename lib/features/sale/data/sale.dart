@@ -17,7 +17,7 @@ class Sale with _$Sale {
       List<SaleItem>? items,
       Map<String, SaleItem>? itemsByProductId,
       Map<Currency, double>? sums,
-      bool? preOrder,
+      String? comment,
       Map<Currency, double>? discounts}) = _Sale;
 
   factory Sale.fromJson(Map<String, Object?> json) => _$SaleFromJson(json);

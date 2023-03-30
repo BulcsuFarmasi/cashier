@@ -31,7 +31,7 @@ class SaleRepository {
     PaymentMethod? paymentMethod,
     SaleItem? saleItem,
     Currency? currency,
-    bool? preOrder,
+    String? comment,
     Map<Currency, double>? discounts,
   }) {
     if (saleItem != null) {
@@ -58,7 +58,7 @@ class SaleRepository {
       _saleService.updateSale(
         paymentMethod: paymentMethod,
         currency: currency,
-        preOrder: preOrder,
+        comment: comment,
       );
     }
     return _saleService.loadSale();
