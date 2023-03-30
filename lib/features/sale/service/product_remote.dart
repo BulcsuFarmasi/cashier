@@ -1,5 +1,5 @@
 import 'package:cashier/features/sale/data/product.dart';
-import 'package:cashier/shared/firebase_provider.dart';
+import 'package:cashier/shared/providers/firestore_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
