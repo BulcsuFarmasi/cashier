@@ -39,7 +39,8 @@ class ExportSales extends StatelessWidget {
       ...salesReport.currencyPaymentMethods
           .map((CurrencyPaymentMethodTuple currencyPaymentMethod) =>
               'Vásárlás (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})')
-          .toList()
+          .toList(),
+      'Megjegyzés',
     ];
     return headerCells.join(';');
   }
@@ -76,7 +77,8 @@ class ExportSales extends StatelessWidget {
                         sale.paymentMethod == currencyPaymentMethod.paymentMethod
                     ? '1'
                     : '')
-            .toList()
+            .toList(),
+        sale.comment ?? '',
       ];
 
       rows.add(row.join(';'));

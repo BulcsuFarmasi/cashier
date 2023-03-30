@@ -30,16 +30,16 @@ class SaleService {
     PaymentMethod? paymentMethod,
     Map<Currency, double>? sums,
     Currency? currency,
-    bool? preOrder,
     Map<Currency, double>? discounts,
+    String? comment,
   }) {
     _sale = _sale.copyWith(
         items: saleItems ?? _sale.items,
         paymentMethod: paymentMethod ?? _sale.paymentMethod,
         sums: sums ?? _sale.sums,
         currency: currency ?? _sale.currency,
-        preOrder: preOrder ?? _sale.preOrder,
         discounts: discounts ?? _sale.discounts,
+      comment: comment ?? _sale.comment,
     );
   }
 
