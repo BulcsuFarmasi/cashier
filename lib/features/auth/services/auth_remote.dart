@@ -10,9 +10,9 @@ class AuthRemote {
 
   AuthRemote(this._firebaseAuth);
 
-  void signIn(String email, String password) {
+  Future<void> signIn(String email, String password) async {
     try {
-      _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException {
       rethrow;
     }

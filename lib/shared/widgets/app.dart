@@ -1,3 +1,4 @@
+import 'package:cashier/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:cashier/features/sale/all_sales/view/pages/all_sales_page.dart';
 import 'package:cashier/features/sale/sale/view/pages/sale_page.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,8 @@ class App extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (_) => const SalePage(),
+        '/': (_) => const SignInPage(),
+        SalePage.routeName: (_) => const SalePage(),
         AllSalesPage.routeName: (_) => const AllSalesPage(),
       },
     );

@@ -14,9 +14,9 @@ class AuthService {
 
   AuthService(this._authRemote);
 
-  void signIn(String email, String password) {
+  Future<void> signIn(String email, String password) async {
     try {
-      _authRemote.signIn(email, password);
+      await _authRemote.signIn(email, password);
     } on FirebaseAuthException {
       throw AuthException();
     }
