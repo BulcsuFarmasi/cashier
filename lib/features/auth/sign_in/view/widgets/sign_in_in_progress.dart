@@ -10,12 +10,14 @@ class SignInInProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SignInForm(
           email: email,
           password: password,
         ),
-        const CircularProgressIndicator()
+        const SizedBox(height: 30,),
+        const CircularProgressIndicator(),
       ],
     );
   }

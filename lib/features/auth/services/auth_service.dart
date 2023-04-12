@@ -1,4 +1,3 @@
-import 'package:cashier/features/auth/data/auth_exception.dart';
 import 'package:cashier/features/auth/services/auth_remote.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,9 +15,10 @@ class AuthService {
 
   Future<void> signIn(String email, String password) async {
     try {
-      await _authRemote.signIn(email, password);
+
+    await _authRemote.signIn(email, password);
     } on FirebaseAuthException {
-      throw AuthException();
+      rethrow;
     }
   }
 

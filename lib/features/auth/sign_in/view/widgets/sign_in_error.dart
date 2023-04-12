@@ -10,12 +10,14 @@ class SignInError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SignInForm(
           email: email,
           password: password,
         ),
-        const Text('Rossz email vagy jelszó'),
+        const SizedBox(height: 20,),
+        const Text('Rossz email vagy jelszó', style: TextStyle(color: Colors.red, fontSize: 18),),
       ],
     );
   }

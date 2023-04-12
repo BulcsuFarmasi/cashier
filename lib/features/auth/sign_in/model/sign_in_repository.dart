@@ -1,5 +1,6 @@
 import 'package:cashier/features/auth/data/auth_exception.dart';
 import 'package:cashier/features/auth/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final Provider<SignInRepository> signInRepositoryProvider =
@@ -11,11 +12,15 @@ class SignInRepository {
   final AuthService _authService;
 
   Future<void> signIn(String email, String password) async {
+
     try {
-      await _authService.signIn(email, password);
-    } on AuthException {
-      print('e');
-      rethrow;
+    await _authService.signIn(email, password);
+
+    } on FirebaseAuthException {
+      throw AuthException();
     }
+
+
+
   }
 }

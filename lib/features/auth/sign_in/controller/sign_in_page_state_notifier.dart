@@ -15,14 +15,13 @@ class SignInPageStateNotifier extends StateNotifier<SignInPageState> {
 
   final SignInRepository _signInRepository;
 
-  void signIn(String email, String password) {
+  void signIn(String email, String password) async {
     state = SignInPageState.inProgress(email, password);
     try {
-      _signInRepository.signIn(email, password);
+      await _signInRepository.signIn(email, password);
 
       state = const SignInPageState.successful();
     } on AuthException {
-      print('x');
       state = SignInPageState.error(email, password);
     }
   }
