@@ -77,7 +77,9 @@ class SaleLoadSuccessful extends ConsumerWidget {
         const SizedBox(
           height: 30,
         ),
-       CommentField(comment: sale.comment,),
+        CommentField(
+          comment: sale.comment,
+        ),
         const SizedBox(
           height: 30,
         ),

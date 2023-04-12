@@ -8,7 +8,7 @@ enum Currency {
 
   @override
   String toString() {
-    switch(this) {
+    switch (this) {
       case Currency.huf:
         return "huf";
       case Currency.eur:

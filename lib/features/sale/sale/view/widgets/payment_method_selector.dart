@@ -41,7 +41,8 @@ class _PaymentMethodSelectorState extends ConsumerState<PaymentMethodSelector> {
           for (PaymentMethod paymentMethod in PaymentMethod.values)
             ListTile(
               title: Text(paymentMethod.name),
-              leading: Radio<PaymentMethod>(value: paymentMethod, groupValue: _paymentMethod, onChanged: _changePaymentMethod),
+              leading: Radio<PaymentMethod>(
+                  value: paymentMethod, groupValue: _paymentMethod, onChanged: _changePaymentMethod),
             ),
         ],
       ),

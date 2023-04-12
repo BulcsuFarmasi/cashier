@@ -12,15 +12,10 @@ class SignInRepository {
   final AuthService _authService;
 
   Future<void> signIn(String email, String password) async {
-
     try {
-    await _authService.signIn(email, password);
-
+      await _authService.signIn(email, password);
     } on FirebaseAuthException {
       throw AuthException();
     }
-
-
-
   }
 }

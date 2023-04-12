@@ -34,11 +34,11 @@ class SaleService {
     String? comment,
   }) {
     _sale = _sale.copyWith(
-        items: saleItems ?? _sale.items,
-        paymentMethod: paymentMethod ?? _sale.paymentMethod,
-        sums: sums ?? _sale.sums,
-        currency: currency ?? _sale.currency,
-        discounts: discounts ?? _sale.discounts,
+      items: saleItems ?? _sale.items,
+      paymentMethod: paymentMethod ?? _sale.paymentMethod,
+      sums: sums ?? _sale.sums,
+      currency: currency ?? _sale.currency,
+      discounts: discounts ?? _sale.discounts,
       comment: comment ?? _sale.comment,
     );
   }

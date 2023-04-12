@@ -16,8 +16,13 @@ class SignInError extends StatelessWidget {
           email: email,
           password: password,
         ),
-        const SizedBox(height: 20,),
-        const Text('Rossz email vagy jelszó', style: TextStyle(color: Colors.red, fontSize: 18),),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          'Rossz email vagy jelszó',
+          style: TextStyle(color: Colors.red, fontSize: 18),
+        ),
       ],
     );
   }

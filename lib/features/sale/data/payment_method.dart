@@ -1,5 +1,3 @@
-
-
 enum PaymentMethod {
   card('Kártya'),
   cash('Készpénz');

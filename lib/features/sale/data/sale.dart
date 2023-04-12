@@ -4,7 +4,6 @@ import 'package:cashier/features/sale/data/sale_item.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'sale.freezed.dart';
-
 part 'sale.g.dart';
 
 @freezed

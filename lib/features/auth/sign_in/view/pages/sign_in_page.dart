@@ -16,9 +16,11 @@ class SignInPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final SignInPageState state = ref.watch(signInPageStateNotifierProvider);
     ref.listen(signInPageStateNotifierProvider, (_, SignInPageState next) {
-      next.maybeMap(successful: (_) async {
-        await Navigator.of(context).pushNamed(SalePage.routeName);
-      },orElse: () => null);
+      next.maybeMap(
+          successful: (_) async {
+            await Navigator.of(context).pushNamed(SalePage.routeName);
+          },
+          orElse: () => null);
     });
     return Scaffold(
       body: Center(

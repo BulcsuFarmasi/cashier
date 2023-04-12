@@ -5,5 +5,6 @@ part 'app_state.freezed.dart';
 @freezed
 class AppState with _$AppState {
   const factory AppState.signedIn() = _SignedIn;
+
   const factory AppState.signedOut() = _SignedOut;
 }

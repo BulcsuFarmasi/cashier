@@ -8,5 +8,6 @@ part 'sales_report.freezed.dart';
 
 @freezed
 class SalesReport with _$SalesReport {
-  const factory SalesReport(List<Sale> sales, List<Product> products, SalesSummary salesSummary, List<CurrencyPaymentMethodTuple> currencyPaymentMethods) = _SalesReport;
+  const factory SalesReport(List<Sale> sales, List<Product> products, SalesSummary salesSummary,
+      List<CurrencyPaymentMethodTuple> currencyPaymentMethods) = _SalesReport;
 }

@@ -16,7 +16,9 @@ class SignInInProgress extends StatelessWidget {
           email: email,
           password: password,
         ),
-        const SizedBox(height: 30,),
+        const SizedBox(
+          height: 30,
+        ),
         const CircularProgressIndicator(),
       ],
     );

@@ -53,7 +53,6 @@ class SaleRepository {
       Sale sale = _saleService.loadSale();
       final Map<Currency, double> sums = _calculateSums(sale);
       _saleService.updateSale(sums: sums);
-
     } else {
       _saleService.updateSale(
         paymentMethod: paymentMethod,
