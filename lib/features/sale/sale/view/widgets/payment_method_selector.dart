@@ -15,9 +15,9 @@ class PaymentMethodSelector extends ConsumerStatefulWidget {
 class _PaymentMethodSelectorState extends ConsumerState<PaymentMethodSelector> {
   PaymentMethod? _paymentMethod;
 
-  @override
-  void initState() {
-    super.initState();
+@override
+  void didUpdateWidget(covariant PaymentMethodSelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _paymentMethod = widget.paymentMethod;
   }
 

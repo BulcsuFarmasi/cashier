@@ -45,6 +45,7 @@ dependencies:
   file_saver: ^0.2.1
   enough_convert: ^1.6.0
   firebase_auth: ^4.3.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

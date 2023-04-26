@@ -16,7 +16,7 @@ class ProductRemote {
   static const collectionName = "products";
 
   Future<List<Product>> loadSales() async {
-    final QuerySnapshot<Map<String, dynamic>> querySnapshot = await _collection.get();
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot = await _collection.orderBy('order').get();
     return querySnapshot.docs
         .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => Product.fromJson(doc.data()).copyWith(id: doc.id))
         .toList();

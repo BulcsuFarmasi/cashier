@@ -37,7 +37,7 @@ class _DiscountsState extends ConsumerState<Discounts> {
                 decoration: InputDecoration(
                   label: Text('Kedvezmény (${currency.name})'),
                 ),
-                initialValue: '${_discounts[currency]}',
+                initialValue: '0',
                 onChanged: (String? amount) {
                   if (amount != null) {
                     _changeDiscount(double.tryParse(amount) ?? 0, currency);

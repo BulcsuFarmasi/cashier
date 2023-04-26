@@ -16,8 +16,8 @@ class _CurrencySelectorState extends ConsumerState<CurrencySelector> {
   Currency? _currency;
 
   @override
-  void initState() {
-    super.initState();
+  void didUpdateWidget(covariant CurrencySelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _currency = widget.currency;
   }
 

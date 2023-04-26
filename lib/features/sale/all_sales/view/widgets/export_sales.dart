@@ -8,6 +8,7 @@ import 'package:cashier/features/sale/data/sales_report.dart';
 import 'package:enough_convert/enough_convert.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ExportSales extends StatelessWidget {
   const ExportSales({super.key, required this.salesReport});
@@ -50,11 +51,17 @@ class ExportSales extends StatelessWidget {
 
     for (Sale sale in salesReport.sales) {
       List<String> row = [
-        '${sale.date}',
+        DateFormat('yyyy.MM.dd HH:mm:ss').format(sale.date!),
         for (Product product in salesReport.products) ...[
-          '${sale.itemsByProductId![product.id]!.amount}',
+          sale.itemsByProductId![product.id]?.amount != null && sale.itemsByProductId![product.id]!.amount != 0
+              ? '${sale.itemsByProductId![product.id]!.amount}'
+              : '',
           for (Currency currency in Currency.values)
-            currency == sale.currency ? '${sale.itemsByProductId![product.id]!.prices[currency]}' : '',
+            currency == sale.currency &&
+                    sale.itemsByProductId![product.id]?.prices[currency] != null &&
+                    sale.itemsByProductId![product.id]!.prices[currency] != 0
+                ? '${sale.itemsByProductId![product.id]!.prices[currency]}'
+                : '',
         ],
         ...salesReport.currencyPaymentMethods
             .map(
