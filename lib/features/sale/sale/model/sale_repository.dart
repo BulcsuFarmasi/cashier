@@ -19,10 +19,19 @@ class SaleRepository {
 
   Future<Sale> createSale() async {
     _saleService.createSale();
-    final List<SaleItem> saleItems = (await _productService.loadProducts())
-        .map((Product product) =>
-            SaleItem(product: product, amount: 0, prices: {for (Currency currency in Currency.values) currency: 0}))
-        .toList();
+    final List<SaleItem> saleItems = (await _productService.loadProducts()).map((Product product) {
+      product = product.copyWith(
+        prices: Map.fromEntries(
+          product.prices.entries.toList()
+            ..sort(
+              (e1, e2) => e1.key.index.compareTo(e2.key.index),
+            ),
+        ),
+      );
+      SaleItem saleItem =
+          SaleItem(product: product, amount: 0, prices: {for (Currency currency in Currency.values) currency: 0});
+      return saleItem;
+    }).toList();
     _saleService.updateSale(saleItems: saleItems, sums: {for (Currency currency in Currency.values) currency: 0});
     return _saleService.loadSale();
   }
@@ -53,7 +62,6 @@ class SaleRepository {
       Sale sale = _saleService.loadSale();
       final Map<Currency, double> sums = _calculateSums(sale);
       _saleService.updateSale(sums: sums);
-
     } else {
       _saleService.updateSale(
         paymentMethod: paymentMethod,

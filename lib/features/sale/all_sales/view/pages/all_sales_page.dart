@@ -27,12 +27,13 @@ class _AllPageStateState extends ConsumerState<AllSalesPage> {
   Widget build(BuildContext context) {
     final AllSalesPageState state = ref.watch(allSalesPageNotifierProvider);
     return Scaffold(
-      body: state.map(
+      body: SingleChildScrollView(
+        child: state.map(
           initial: (_) => Container(),
           inProgress: (_) => const AllSalesInProgress(),
-          successful: (successful) => AllSalesSuccessful(
-                salesReport: successful.salesReport,
-              )),
+          successful: (successful) => AllSalesSuccessful(salesReport: successful.salesReport),
+        ),
+      ),
     );
   }
 }

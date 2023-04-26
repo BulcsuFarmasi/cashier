@@ -12,9 +12,15 @@ class SumRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Végösszeg: ', style: sumStyle,),
+        Text(
+          'Végösszeg: ',
+          style: sumStyle,
+        ),
         for (MapEntry<Currency, double> sum in sums.entries)
-          Text('${sum.value} ${sum.key.name}, ', style: sumStyle,),
+          Text(
+            '${sum.value} ${sum.key.name}, ',
+            style: sumStyle,
+          ),
       ],
     );
   }

@@ -15,9 +15,9 @@ class PaymentMethodSelector extends ConsumerStatefulWidget {
 class _PaymentMethodSelectorState extends ConsumerState<PaymentMethodSelector> {
   PaymentMethod? _paymentMethod;
 
-  @override
-  void initState() {
-    super.initState();
+@override
+  void didUpdateWidget(covariant PaymentMethodSelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _paymentMethod = widget.paymentMethod;
   }
 
@@ -41,7 +41,8 @@ class _PaymentMethodSelectorState extends ConsumerState<PaymentMethodSelector> {
           for (PaymentMethod paymentMethod in PaymentMethod.values)
             ListTile(
               title: Text(paymentMethod.name),
-              leading: Radio<PaymentMethod>(value: paymentMethod, groupValue: _paymentMethod, onChanged: _changePaymentMethod),
+              leading: Radio<PaymentMethod>(
+                  value: paymentMethod, groupValue: _paymentMethod, onChanged: _changePaymentMethod),
             ),
         ],
       ),

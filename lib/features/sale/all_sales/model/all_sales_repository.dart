@@ -83,16 +83,15 @@ class AllSalesRepository {
       amounts[CurrencyPaymentMethodTuple(sale.currency!, sale.paymentMethod!)] = (amount ?? 0) + 1;
 
       for (SaleItem saleItem in sale.items!) {
-          final ProductSummary? productSummary = productSummaries[saleItem.product.id!];
-          final int amount = productSummary!.amount + saleItem.amount;
-          final Map<Currency, double> prices = {...productSummary.prices};
-          final double price = productSummary.prices[sale.currency]! + saleItem.prices[sale.currency]!;
-          prices[sale.currency!] = price;
-          productSummaries[saleItem.product.id!] = productSummary.copyWith(amount: amount, prices: prices);
+        final ProductSummary? productSummary = productSummaries[saleItem.product.id!];
+        final int amount = productSummary!.amount + saleItem.amount;
+        final Map<Currency, double> prices = {...productSummary.prices};
+        final double price = productSummary.prices[sale.currency]! + saleItem.prices[sale.currency]!;
+        prices[sale.currency!] = price;
+        productSummaries[saleItem.product.id!] = productSummary.copyWith(amount: amount, prices: prices);
       }
-
     }
-      return SalesSummary(productSummaries: productSummaries, sums: sums, discounts: discounts, amounts: amounts);
+    return SalesSummary(productSummaries: productSummaries, sums: sums, discounts: discounts, amounts: amounts);
   }
 
   List<Sale> _createSaleItemByProductId(List<Sale> sales) => sales

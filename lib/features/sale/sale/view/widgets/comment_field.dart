@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CommentField extends ConsumerWidget {
-  const CommentField({String? comment, super.key}) : _comment = comment;
-
-  final String? _comment;
+  const CommentField({super.key});
 
   void _changeComment(String? comment, WidgetRef ref) {
     ref.read(salePageStateNotifierProvider.notifier).updateSale(comment: comment);
@@ -16,14 +14,14 @@ class CommentField extends ConsumerWidget {
     return SizedBox(
       width: 300,
       child: TextFormField(
-        initialValue: _comment,
+        initialValue: '',
         maxLines: 3,
         decoration: const InputDecoration(
           label: Text('Megjegyzés'),
         ),
         onChanged: (String? value) {
           _changeComment(value, ref);
-        },
+        }
       ),
     );
   }

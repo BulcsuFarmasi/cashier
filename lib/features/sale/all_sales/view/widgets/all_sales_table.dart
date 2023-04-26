@@ -6,6 +6,7 @@ import 'package:cashier/features/sale/data/sale.dart';
 import 'package:cashier/features/sale/data/sales_report.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 class AllSalesTable extends ConsumerStatefulWidget {
   const AllSalesTable({required this.salesReport, super.key});
@@ -32,21 +33,27 @@ class _AllSalesTableState extends ConsumerState<AllSalesTable> {
         const Text('Vásárlás dátuma'),
         for (Product product in widget.salesReport.products) ...[
           Text('${product.name} (db)'),
-          for (Currency currency in Currency.values) Text('${product.name} (${currency.name})')
+          for (Currency currency in Currency.values) Text('${product.name} (${currency.name})'),
         ],
         ...widget.salesReport.currencyPaymentMethods
-            .map((CurrencyPaymentMethodTuple currencyPaymentMethod) =>
-                Text('Végösszeg (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
+            .map(
+              (CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
+                  'Végösszeg (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'),
+            )
             .toList(),
         ...widget.salesReport.currencyPaymentMethods
-            .map((CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
-                'Kedvezmémy (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
+            .map(
+              (CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
+                  'Kedvezmémy (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'),
+            )
             .toList(),
         ...widget.salesReport.currencyPaymentMethods
-            .map((CurrencyPaymentMethodTuple currencyPaymentMethod) =>
-                Text('Vásárlás (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'))
+            .map(
+              (CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
+                  'Vásárlás (${currencyPaymentMethod.currency.name}, ${currencyPaymentMethod.paymentMethod.name})'),
+            )
             .toList(),
-        const Text('Megjegyzés')
+        const Text('Megjegyzés'),
       ],
     );
   }
@@ -55,15 +62,22 @@ class _AllSalesTableState extends ConsumerState<AllSalesTable> {
     return TableRow(
       children: [
         Checkbox(
-            onChanged: (bool? checked) {
-              _markSale(checked, sale.id!);
-            },
-            value: _markedSaleIds.contains(sale.id)),
-        Text('${sale.date}'),
+          onChanged: (bool? checked) {
+            _markSale(checked, sale.id!);
+          },
+          value: _markedSaleIds.contains(sale.id),
+        ),
+        Text(DateFormat('yyyy.MM.dd HH:mm:ss').format(sale.date!)),
         for (Product product in widget.salesReport.products) ...[
-          Text('${sale.itemsByProductId![product.id]!.amount}'),
+          Text(sale.itemsByProductId![product.id]?.amount != null && sale.itemsByProductId![product.id]!.amount != 0
+              ? '${sale.itemsByProductId![product.id]?.amount}'
+              : ''),
           for (Currency currency in Currency.values)
-            Text(currency == sale.currency ? '${sale.itemsByProductId![product.id]!.prices[currency]}' : ''),
+            Text(currency == sale.currency &&
+                    sale.itemsByProductId![product.id]?.prices[currency] != null &&
+                    sale.itemsByProductId![product.id]!.prices[currency] != 0
+                ? '${sale.itemsByProductId![product.id]!.prices[currency]}'
+                : ''),
         ],
         ...widget.salesReport.currencyPaymentMethods.map(
           (CurrencyPaymentMethodTuple currencyPaymentMethodTuple) => Text(
@@ -81,11 +95,13 @@ class _AllSalesTableState extends ConsumerState<AllSalesTable> {
                   : ''),
         ),
         ...widget.salesReport.currencyPaymentMethods
-            .map((CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
-                sale.currency == currencyPaymentMethod.currency &&
-                        sale.paymentMethod == currencyPaymentMethod.paymentMethod
-                    ? '1'
-                    : ''))
+            .map(
+              (CurrencyPaymentMethodTuple currencyPaymentMethod) => Text(
+                  sale.currency == currencyPaymentMethod.currency &&
+                          sale.paymentMethod == currencyPaymentMethod.paymentMethod
+                      ? '1'
+                      : ''),
+            )
             .toList(),
         Text(sale.comment ?? ''),
       ],
@@ -173,10 +189,10 @@ class _AllSalesTableState extends ConsumerState<AllSalesTable> {
           border: TableBorder.all(),
           children: [
             _buildTableHeader(),
-            ...widget.salesReport.sales.map(_buildTableRow).toList(),
-            _buildSummaryRow(),
+            for (Sale sale in widget.salesReport.sales) _buildTableRow(sale),
+            _buildSummaryRow()
           ],
-        ),
+        )
       ],
     );
   }
